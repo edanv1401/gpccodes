@@ -9,17 +9,20 @@
         Peor Caso: O(n^2)
 '''
 
-from sys import stdin, stdout, maxsize
+from sys import stdin, stdout
 rl = stdin.readline
 wr = stdout.write
 
 
 class Hoja:
 
-    def __init__(self, item):
+    def __init__(self, item=None):
         self.key = item
         self.right = None
         self.left = None
+
+      
+root = Hoja()
 
 
 def init():
@@ -33,8 +36,7 @@ def insert(key):
 
 
 def insertRec(raiz, key):
-    global root
-
+   
     if raiz == None:
         raiz = Hoja(key)
         return raiz
@@ -53,13 +55,22 @@ def inOrder(actual):
         wr(f'{actual.key} ')
         inOrder(actual.right)
 
-
+      
+def posOrder(actual):
+    if actual != None:
+        posOrder(actual.right)
+        wr(f'{actual.key} ')
+        posOrder(actual.left)
+      
+      
 def insertInTree(arr):
     for i in range(len(arr)):
         insert(arr[i])
 
 
 arr = list(map(int, rl().split()))
-root = Hoja(arr[0])
+init()
 insertInTree(arr)
 inOrder(root)
+wr('\n')
+posOrder(root)
